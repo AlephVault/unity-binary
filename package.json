@@ -5,7 +5,7 @@
   "description": "Utilities to serialize and deserialize content in a particular byte array representation.",
   "unity": "2020.1",
   "dependencies": {
-    "com.alephvault.unity.support": "0.0.1",
+    "com.alephvault.unity.support": "0.0.1"
   },
   "author": {
     "name": "Aleph Vault",
