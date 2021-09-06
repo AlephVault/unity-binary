@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator Char(char value) => new Char(value);
         }
     }
 }

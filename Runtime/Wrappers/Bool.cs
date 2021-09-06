@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static implicit operator Bool(bool value) => new Bool(value);
         }
     }
 }

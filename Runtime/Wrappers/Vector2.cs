@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator Vector2(UnityEngine.Vector2 value) => new Vector2(value);
         }
     }
 }

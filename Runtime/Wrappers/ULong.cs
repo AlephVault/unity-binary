@@ -5,11 +5,11 @@ namespace AlephVault.Unity.Binary
         /// <summary>
         ///   A serializable wrapper around a <see cref="ulong"/> value.
         /// </summary>
-        public class ULonh : Wrapper<ulong>
+        public class ULong : Wrapper<ulong>
         {
-            public ULonh(ulong wrapped) : base(wrapped) { }
+            public ULong(ulong wrapped) : base(wrapped) { }
 
-            public ULonh() : base() { }
+            public ULong() : base() { }
 
             /// <summary>
             ///   The serialization is done by doing it over the internal
@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator ULong(ulong value) => new ULong(value);
         }
     }
 }

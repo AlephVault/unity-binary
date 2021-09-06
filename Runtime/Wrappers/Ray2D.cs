@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator Ray2D(UnityEngine.Ray2D value) => new Ray2D(value);
         }
     }
 }

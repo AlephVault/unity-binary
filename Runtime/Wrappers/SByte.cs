@@ -1,8 +1,3 @@
-using AlephVault.Unity.Binary;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace AlephVault.Unity.Binary
 {
     namespace Wrappers
@@ -25,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator SByte(sbyte value) => new SByte(value);
         }
     }
 }

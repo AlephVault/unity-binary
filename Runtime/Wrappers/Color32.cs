@@ -20,6 +20,8 @@ namespace AlephVault.Unity.Binary
             {
                 serializer.Serialize(ref Wrapped);
             }
+
+            public static explicit operator Color32(UnityEngine.Color32 value) => new Color32(value);
         }
     }
 }
