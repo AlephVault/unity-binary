@@ -1,19 +1,16 @@
-using AlephVault.Unity.Binary;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace AlephVault.Unity.Binary
 {
-    namespace Delta
+    namespace Wrappers
     {
         /// <summary>
-        ///   This is a simple delta consisting on a wrapped
-        ///   int delta. This one just involves replacing
-        ///   the old value with the new value.
+        ///   A serializable wrapper around a <see cref="ulong"/> value.
         /// </summary>
-        public class Int : Custom<int>
+        public class ULonh : Wrapper<ulong>
         {
+            public ULonh(ulong wrapped) : base(wrapped) { }
+
+            public ULonh() : base() { }
+
             /// <summary>
             ///   The serialization is done by doing it over the internal
             ///   delta value member.
@@ -21,7 +18,7 @@ namespace AlephVault.Unity.Binary
             /// <param name="serializer">The serializer to use</param>
             public override void Serialize(Serializer serializer)
             {
-                serializer.Serialize(ref deltaValue);
+                serializer.Serialize(ref Wrapped);
             }
         }
     }

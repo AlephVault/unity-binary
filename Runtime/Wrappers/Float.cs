@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace AlephVault.Unity.Binary
 {
-    namespace Delta
+    namespace Wrappers
     {
         /// <summary>
-        ///   This is a simple delta consisting on a wrapped
-        ///   Enum delta, of a given Enum type. This one just
-        ///   involves replacing the old value with the new
-        ///   value (from the same enumeration).
+        ///   A serializable wrapper around a <see cref="float"/> value.
         /// </summary>
-
-        public class Enum<T> : Custom<T> where T : unmanaged, System.Enum
+        public class Float : Wrapper<float>
         {
+            public Float(float wrapped) : base(wrapped) { }
+
+            public Float() : base() { }
+
             /// <summary>
             ///   The serialization is done by doing it over the internal
             ///   delta value member.
@@ -23,7 +23,7 @@ namespace AlephVault.Unity.Binary
             /// <param name="serializer">The serializer to use</param>
             public override void Serialize(Serializer serializer)
             {
-                serializer.Serialize(ref deltaValue);
+                serializer.Serialize(ref Wrapped);
             }
         }
     }

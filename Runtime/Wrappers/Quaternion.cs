@@ -5,16 +5,17 @@ using UnityEngine;
 
 namespace AlephVault.Unity.Binary
 {
-    namespace Delta
+    namespace Wrappers
     {
         /// <summary>
-        ///   This is a simple delta consisting on a wrapped
-        ///   sbyte delta. This one just involves replacing
-        ///   the old value with the new value.
+        ///   A serializable wrapper around a <see cref="UnityEngine.Quaternion"/> value.
         /// </summary>
-        /// <typeparam name="T">The wrapped type</typeparam>
-        public class SByte<T> : Custom<sbyte>
+        public class Quaternion : Wrapper<UnityEngine.Quaternion>
         {
+            public Quaternion(UnityEngine.Quaternion wrapped) : base(wrapped) { }
+
+            public Quaternion() : base() { }
+
             /// <summary>
             ///   The serialization is done by doing it over the internal
             ///   delta value member.
@@ -22,7 +23,7 @@ namespace AlephVault.Unity.Binary
             /// <param name="serializer">The serializer to use</param>
             public override void Serialize(Serializer serializer)
             {
-                serializer.Serialize(ref deltaValue);
+                serializer.Serialize(ref Wrapped);
             }
         }
     }
