@@ -47,6 +47,24 @@ namespace AlephVault.Unity.Binary
         }
 
         /// <summary>
+        ///   Returns the underlying stream.
+        /// </summary>
+        public Stream GetStream()
+        {
+            return m_Source;
+        }
+
+        /// <summary>
+        ///   Returns the underlying network stream. It is the same
+        ///   reference the <see cref="GetStream"/> method would
+        ///   return, if such stream is a <see cref="Buffer"/>.
+        /// </summary>
+        public Buffer GetBuffer()
+        {
+            return m_NetworkSource;
+        }
+
+        /// <summary>
         /// Reads a single byte
         /// </summary>
         /// <returns>The byte read as an integer</returns>

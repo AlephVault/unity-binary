@@ -40,9 +40,22 @@ namespace AlephVault.Unity.Binary
             m_NetworkSink = stream as Buffer;
         }
 
-        internal Stream GetStream()
+        /// <summary>
+        ///   Returns the underlying stream.
+        /// </summary>
+        public Stream GetStream()
         {
             return m_Sink;
+        }
+
+        /// <summary>
+        ///   Returns the underlying network stream. It is the same
+        ///   reference the <see cref="GetStream"/> method would
+        ///   return, if such stream is a <see cref="Buffer"/>.
+        /// </summary>
+        public Buffer GetBuffer()
+        {
+            return m_NetworkSink;
         }
 
         /// <summary>
