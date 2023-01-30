@@ -43,10 +43,41 @@ namespace AlephVault.Unity.Binary
             else m_Writer.WriteBool(value);
         }
 
+        public void Serialize(ref bool? value)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? m_Reader.ReadBool() : (bool?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue) m_Writer.WriteBool(value.Value);
+            }
+        }
+
         public void Serialize(ref char value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadCharPacked() : m_Reader.ReadChar();
             else { if (packed) { m_Writer.WriteCharPacked(value); } else { m_Writer.WriteChar(value); }}
+        }
+
+        public void Serialize(ref char? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadCharPacked() : m_Reader.ReadChar()) : (char?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteCharPacked(value.Value); } else { m_Writer.WriteChar(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref sbyte value)
@@ -55,10 +86,38 @@ namespace AlephVault.Unity.Binary
             else m_Writer.WriteSByte(value);
         }
 
+        public void Serialize(ref sbyte? value)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? m_Reader.ReadSByte() : (sbyte?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue) m_Writer.WriteSByte(value.Value);
+            }
+        }
+
         public void Serialize(ref byte value)
         {
             if (IsReading) value = m_Reader.ReadByteDirect();
             else m_Writer.WriteByte(value);
+        }
+
+        public void Serialize(ref byte? value)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? m_Reader.ReadByteDirect() : (byte?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue) m_Writer.WriteByte(value.Value);
+            }
         }
 
         public void Serialize(ref short value, bool packed = true)
@@ -67,10 +126,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteInt16Packed(value); } else { m_Writer.WriteInt16(value); }}
         }
 
+        public void Serialize(ref short? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadInt16Packed() : m_Reader.ReadInt16()) : (short?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteInt16Packed(value.Value); } else { m_Writer.WriteInt16(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref ushort value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadUInt16Packed() : m_Reader.ReadUInt16();
             else { if (packed) { m_Writer.WriteUInt16Packed(value); } else { m_Writer.WriteUInt16(value); }}
+        }
+
+        public void Serialize(ref ushort? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadUInt16Packed() : m_Reader.ReadUInt16()) : (ushort?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteUInt16Packed(value.Value); } else { m_Writer.WriteUInt16(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref int value, bool packed = true)
@@ -79,10 +172,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteInt32Packed(value); } else { m_Writer.WriteInt32(value); }}
         }
 
+        public void Serialize(ref int? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadInt32Packed() : m_Reader.ReadInt32()) : (int?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteInt32Packed(value.Value); } else { m_Writer.WriteInt32(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref uint value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadUInt32Packed() : m_Reader.ReadUInt32();
             else { if (packed) { m_Writer.WriteUInt32Packed(value); } else { m_Writer.WriteUInt32(value); }}
+        }
+
+        public void Serialize(ref uint? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadUInt32Packed() : m_Reader.ReadUInt32()) : (uint?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteUInt32Packed(value.Value); } else { m_Writer.WriteUInt32(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref long value, bool packed = true)
@@ -91,10 +218,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteInt64Packed(value); } else { m_Writer.WriteInt64(value); }}
         }
 
+        public void Serialize(ref long? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadInt64Packed() : m_Reader.ReadInt64()) : (long?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteInt64Packed(value.Value); } else { m_Writer.WriteInt64(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref ulong value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadUInt64Packed() : m_Reader.ReadUInt64();
             else { if (packed) { m_Writer.WriteUInt64Packed(value); } else { m_Writer.WriteUInt64(value); }}
+        }
+
+        public void Serialize(ref ulong? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadUInt64Packed() : m_Reader.ReadUInt64()) : (ulong?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteUInt64Packed(value.Value); } else { m_Writer.WriteUInt64(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref float value, bool packed = true)
@@ -103,10 +264,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteSinglePacked(value); } else { m_Writer.WriteSingle(value); }}
         }
 
+        public void Serialize(ref float? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadSinglePacked() : m_Reader.ReadSingle()) : (float?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteSinglePacked(value.Value); } else { m_Writer.WriteSingle(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref double value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadDoublePacked() : m_Reader.ReadDouble();
             else { if (packed) { m_Writer.WriteDoublePacked(value); } else { m_Writer.WriteDouble(value); }}
+        }
+
+        public void Serialize(ref double? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadDoublePacked() : m_Reader.ReadDouble()) : (double?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteDoublePacked(value.Value); } else { m_Writer.WriteDouble(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref string value, bool packed = true)
