@@ -235,6 +235,15 @@ namespace AlephVault.Unity.Binary
             }
         }
 
+        public unsafe void Serialize<TEnum>(ref TEnum? value, bool packed = true) where TEnum : unmanaged, Enum
+        {
+            bool hasValue = value.HasValue;
+            TEnum trueValue = value ?? default(TEnum);
+            Serialize(ref hasValue);
+            Serialize(ref trueValue, packed);
+            value = hasValue ? trueValue : (TEnum?)null;
+        }
+
         public void Serialize(ref bool[] array, bool packed = true)
         {
             if (IsReading)
@@ -1268,6 +1277,281 @@ namespace AlephVault.Unity.Binary
                         {
                             TEnum enumValue = array[i];
                             m_Writer.WriteInt64(*(long*)&enumValue);
+                        }
+                    }
+                }
+            }
+            else if (IsReading)
+            {
+                array = default;
+            }
+        }
+        
+        public unsafe void Serialize<TEnum>(ref TEnum?[] array, bool packed = true) where TEnum : unmanaged, Enum
+        {
+            int length;
+            if (IsReading)
+            {
+                length = packed ? m_Reader.ReadInt32Packed() : m_Reader.ReadInt32();
+                array = length > -1 ? new TEnum?[length] : null;
+            }
+            else
+            {
+                length = array?.Length ?? -1;
+                if (packed) { m_Writer.WriteInt32Packed(length); } else { m_Writer.WriteInt32(length); }
+            }
+
+            if (sizeof(TEnum) == sizeof(int))
+            {
+                if (IsReading)
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                int intValue = m_Reader.ReadInt32Packed();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                int intValue = m_Reader.ReadInt32();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt32Packed(*(int*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt32(*(int*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (sizeof(TEnum) == sizeof(byte))
+            {
+                if (IsReading)
+                {
+                    for (var i = 0; i < length; ++i)
+                    {
+                        bool has = m_Reader.ReadBit();
+                        if (has)
+                        {
+                            byte intValue = m_Reader.ReadByteDirect();
+                            array[i] = *(TEnum*)&intValue;
+                        }
+                        else
+                        {
+                            array[i] = null;
+                        }
+
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < length; ++i)
+                    {
+                        if (array[i].HasValue)
+                        {
+                            TEnum value = array[i].Value;
+                            m_Writer.WriteBit(true);
+                            m_Writer.WriteByte(*(byte*)&value);
+                        }
+                        else
+                        {
+                            m_Writer.WriteBit(false);
+                        }
+                    }
+                }
+            }
+            else if (sizeof(TEnum) == sizeof(short))
+            {
+                if (IsReading)
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                short intValue = m_Reader.ReadInt16Packed();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                short intValue = m_Reader.ReadInt16();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt16Packed(*(short*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt16(*(short*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (sizeof(TEnum) == sizeof(long))
+            {
+                if (IsReading)
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                long intValue = m_Reader.ReadInt64Packed();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            bool has = m_Reader.ReadBit();
+                            if (has)
+                            {
+                                long intValue = m_Reader.ReadInt64();
+                                array[i] = *(TEnum*)&intValue;
+                            }
+                            else
+                            {
+                                array[i] = null;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (packed)
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt64Packed(*(long*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < length; ++i)
+                        {
+                            if (array[i].HasValue)
+                            {
+                                TEnum value = array[i].Value;
+                                m_Writer.WriteBit(true);
+                                m_Writer.WriteInt64(*(long*)&value);
+                            }
+                            else
+                            {
+                                m_Writer.WriteBit(false);
+                            }
                         }
                     }
                 }
