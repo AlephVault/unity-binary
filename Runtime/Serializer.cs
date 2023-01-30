@@ -328,10 +328,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteColorPacked(value); } else { m_Writer.WriteColor(value); }}
         }
 
+        public void Serialize(ref Color? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadColorPacked() : m_Reader.ReadColor()) : (Color?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteColorPacked(value.Value); } else { m_Writer.WriteColor(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref Color32 value)
         {
             if (IsReading) value = m_Reader.ReadColor32();
             else m_Writer.WriteColor32(value);
+        }
+
+        public void Serialize(ref Color32? value)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? m_Reader.ReadColor32() : (Color32?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    m_Writer.WriteColor32(value.Value);
+                }
+            }
         }
 
         public void Serialize(ref Vector2 value, bool packed = true)
@@ -340,10 +374,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteVector2Packed(value); } else { m_Writer.WriteVector2(value); }}
         }
 
+        public void Serialize(ref Vector2? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadVector2Packed() : m_Reader.ReadVector2()) : (Vector2?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteVector2Packed(value.Value); } else { m_Writer.WriteVector2(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref Vector3 value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadVector3Packed() : m_Reader.ReadVector3();
             else { if (packed) { m_Writer.WriteVector3Packed(value); } else { m_Writer.WriteVector3(value); }}
+        }
+
+        public void Serialize(ref Vector3? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadVector3Packed() : m_Reader.ReadVector3()) : (Vector3?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteVector3Packed(value.Value); } else { m_Writer.WriteVector3(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref Vector4 value, bool packed = true)
@@ -352,10 +420,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteVector4Packed(value); } else { m_Writer.WriteVector4(value); }}
         }
 
+        public void Serialize(ref Vector4? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadVector4Packed() : m_Reader.ReadVector4()) : (Vector4?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteVector4Packed(value.Value); } else { m_Writer.WriteVector4(value.Value); }
+                }
+            }
+        }
+
         public void Serialize(ref Quaternion value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadRotationPacked() : m_Reader.ReadRotation();
             else { if (packed) { m_Writer.WriteRotationPacked(value); } else { m_Writer.WriteRotation(value); }}
+        }
+
+        public void Serialize(ref Quaternion? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadRotationPacked() : m_Reader.ReadRotation()) : (Quaternion?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteRotationPacked(value.Value); } else { m_Writer.WriteRotation(value.Value); }
+                }
+            }
         }
 
         public void Serialize(ref Ray value, bool packed = true)
@@ -364,10 +466,44 @@ namespace AlephVault.Unity.Binary
             else { if (packed) { m_Writer.WriteRayPacked(value); } else { m_Writer.WriteRay(value); }}
         }
 
+        public void Serialize(ref Ray? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadRayPacked() : m_Reader.ReadRay()) : (Ray?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteRayPacked(value.Value); } else { m_Writer.WriteRay(value.Value); }
+                }
+            }
+        }
+        
         public void Serialize(ref Ray2D value, bool packed = true)
         {
             if (IsReading) value = packed ? m_Reader.ReadRay2DPacked() : m_Reader.ReadRay2D();
             else { if (packed) { m_Writer.WriteRay2DPacked(value); } else { m_Writer.WriteRay2D(value); }}
+        }
+        
+        public void Serialize(ref Ray2D? value, bool packed = true)
+        {
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                value = hasValue ? (packed ? m_Reader.ReadRay2DPacked() : m_Reader.ReadRay2D()) : (Ray2D?)null;
+            }
+            else
+            {
+                m_Writer.WriteBit(value.HasValue);
+                if (value.HasValue)
+                {
+                    if (packed) { m_Writer.WriteRay2DPacked(value.Value); } else { m_Writer.WriteRay2D(value.Value); }
+                }
+            }
         }
 
         public unsafe void Serialize<TEnum>(ref TEnum value, bool packed = true) where TEnum : unmanaged, Enum
@@ -432,11 +568,30 @@ namespace AlephVault.Unity.Binary
 
         public unsafe void Serialize<TEnum>(ref TEnum? value, bool packed = true) where TEnum : unmanaged, Enum
         {
-            bool hasValue = value.HasValue;
-            TEnum trueValue = value ?? default(TEnum);
-            Serialize(ref hasValue);
-            Serialize(ref trueValue, packed);
-            value = hasValue ? trueValue : (TEnum?)null;
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                if (hasValue)
+                {
+                    TEnum trueValue = default;
+                    Serialize(ref trueValue, packed);
+                    value = trueValue;
+                }
+                else
+                {
+                    value = null;
+                }
+            }
+            else
+            {
+                bool hasValue = value.HasValue;
+                m_Writer.WriteBit(hasValue);
+                if (hasValue)
+                {
+                    TEnum trueValue = value.Value;
+                    Serialize(ref trueValue, packed);
+                }
+            }
         }
 
         public void Serialize(ref bool[] array, bool packed = true)
@@ -460,7 +615,7 @@ namespace AlephVault.Unity.Binary
                 }
             }
         }
-
+        
         public void Serialize(ref char[] array, bool packed = true)
         {
             if (IsReading)
@@ -1482,6 +1637,7 @@ namespace AlephVault.Unity.Binary
             }
         }
         
+        /**
         public unsafe void Serialize<TEnum>(ref TEnum?[] array, bool packed = true) where TEnum : unmanaged, Enum
         {
             int length;
@@ -1756,5 +1912,6 @@ namespace AlephVault.Unity.Binary
                 array = default;
             }
         }
+        */
     }
 }
