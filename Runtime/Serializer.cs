@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AlephVault.Unity.Binary
@@ -590,6 +591,38 @@ namespace AlephVault.Unity.Binary
                 {
                     TEnum trueValue = value.Value;
                     Serialize(ref trueValue, packed);
+                }
+            }
+        }
+
+        public void Serialize<TSerializable>(ref TSerializable value) where TSerializable : ISerializable, new()
+        {
+            // This implementation is meant for the case when the
+            // serializable object is allowed to be null or present.
+            // If the object is always meant to be present, just use
+            // the sentence: `obj.Serialize(serializer)` instead.
+
+            if (IsReading)
+            {
+                bool hasValue = m_Reader.ReadBit();
+                if (hasValue)
+                {
+                    TSerializable trueValue = new TSerializable();
+                    trueValue.Serialize(this);
+                    value = trueValue;
+                }
+                else
+                {
+                    value = default;
+                }
+            }
+            else
+            {
+                bool hasValue = !EqualityComparer<TSerializable>.Default.Equals(value, default);
+                m_Writer.WriteBit(hasValue);
+                if (hasValue)
+                {
+                    value.Serialize(this);
                 }
             }
         }
