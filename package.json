@@ -1,6 +1,6 @@
 {
   "name": "com.alephvault.unity.binary",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Aleph Vault - Unity - Binary",
   "description": "Utilities to serialize and deserialize content in a particular byte array representation.",
   "unity": "2020.1",
